@@ -1,0 +1,28 @@
+dotfiles:
+  - name: "Tmux configuration"
+    src: "config/tmux/.tmux.conf"
+    dest: "$HOME/.tmux.conf"
+    type: "symlink"
+      
+  - name: "Bashrc configuration"
+    src: "config/bashrc/.bashrc"
+    dest: "$HOME/.bashrc"
+    type: "symlink"
+      
+  - name: "Bashrc aliases"
+    src: "config/bashrc/.bash_aliases"
+    dest: "$HOME/.bash_aliases"
+    type: "symlink"
+
+  - name: "Git prompt"
+    src: "config/bashrc/git/.git-prompt.sh"
+    dest: "$HOME/.git-prompt.sh"
+    type: "symlink"
+
+  - name: "Git completion"
+    src: "config/bashrc/git/.git-completion.bash"
+    dest: "$HOME/.git-completion.bash"
+    type: "symlink"
+
+post_install:
+  - "echo 'Setup completed!!!'"
