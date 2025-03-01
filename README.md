@@ -1,9 +1,17 @@
-# dotfiles
+# The home of my .dotfiles!
 
+## Installing my dotfiles
+```
+python3 install.py dotfiles_config.yaml
+```
 
-### Get git-prompt and git-completion
-```bash
-curl -LO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-
-curl -LO https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+Project structure:
+```
+├── config
+│   ├── bashrc
+│   │   └── git
+│   └── tmux
+├── dotfiles_config.yaml
+├── install.py
+└── README.md
 ```

@@ -13,7 +13,7 @@ def ask_user_permission(action: str, path: str) -> bool:
     
     return response == 'y'
 
-def create_symlink(src, dest):
+def create_symlink(src: str, dest: str):
     if os.path.islink(dest):
         os.remove(dest)
 
@@ -21,7 +21,12 @@ def create_symlink(src, dest):
 
     log_message(f"Created symlink from {src} to {dest}")
 
-def install_dotfiles(config_file):
+def run_post_commands(commands: list):
+    for cmd in commands:
+        log_message(f"Running command: {cmd}")
+        os.system(cmd)
+
+def install_dotfiles(config_file: str):
     with open(config_file, 'r') as file:
         config = yaml.safe_load(file)
 
@@ -36,15 +41,26 @@ def install_dotfiles(config_file):
         if src and dest:
             src = os.path.abspath(src)
             dest = os.path.expandvars(dest)
-            
-            create_symlink(src, dest)
+           
+            if dotfile.get("type") == "symlink":
+                create_symlink(src, dest)
 
         log_message("")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Install .dotfiles from a YAML config file.")
     parser.add_argument("config_file", help="Path to config file.")
-    
+
     args = parser.parse_args()
 
+    with open(args.config_file, 'r') as file:
+        config = yaml.safe_load(file)
+
     install_dotfiles(args.config_file)
+    
+    post_run_commands = config.get("post_install", [])
+    run_post_commands(post_run_commands)
+
+
+
+
