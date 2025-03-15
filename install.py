@@ -26,12 +26,7 @@ def run_post_commands(commands: list):
         log_message(f"Running command: {cmd}")
         os.system(cmd)
 
-def install_dotfiles(config_file: str):
-    with open(config_file, 'r') as file:
-        config = yaml.safe_load(file)
-
-    dotfiles = config.get("dotfiles", [])
-
+def install_dotfiles(dotfiles):
     for dotfile in dotfiles:
         log_message(f"\033[1;32mProcessing: {dotfile.get('name')}\033[0m")
 
@@ -47,6 +42,16 @@ def install_dotfiles(config_file: str):
 
         log_message("")
 
+def install_tools(tools):
+    for tool in tools:
+        name = tool.get("name")
+        manager = tool.get("manager")
+
+        log_message(f"\033[1;34mInstalling tool: {name}\033[0m")
+        
+        if manager == "apt":
+            os.system(f"sudo apt install {name}")
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Install .dotfiles from a YAML config file.")
     parser.add_argument("config_file", help="Path to config file.")
@@ -56,8 +61,9 @@ if __name__ == "__main__":
     with open(args.config_file, 'r') as file:
         config = yaml.safe_load(file)
 
-    install_dotfiles(args.config_file)
-    
+    install_dotfiles(config.get("dotfiles", []))
+    install_tools(config.get("tools", []))
+
     post_run_commands = config.get("post_install", [])
     run_post_commands(post_run_commands)
 

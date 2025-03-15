@@ -24,5 +24,16 @@ dotfiles:
     dest: "$HOME/.git-completion.bash"
     type: "symlink"
 
+  - name: "Neovim config"
+    src: "neovim"
+    dest: "$HOME/.config/nvim"
+    type: "symlink"
+
+tools: 
+  - name: "neovim"
+    manager: "apt"
+  - name: "tmux"
+    manager: "apt"
+
 post_install:
   - "echo 'Setup completed!!!'"
