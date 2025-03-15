@@ -2,6 +2,8 @@
 
 ## Installing my dotfiles
 ```
+git clonei --recurse-submodules git@github.com:charlesshook/.dotfiles.git
+cd .dotfiles
 python3 install.py dotfiles_config.yaml
 ```
 
